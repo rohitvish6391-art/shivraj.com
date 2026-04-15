@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Fortune - Lucky Number Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(to bottom right, #4f46e5, #7e22ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800 selection:bg-indigo-200">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto px-4 py-6 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/20 p-2 rounded-xl backdrop-blur-sm text-yellow-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+                </div>
+                <h1 class="text-2xl font-bold tracking-tight">Daily Fortune</h1>
+            </div>
+            <div class="hidden sm:flex items-center space-x-2 text-indigo-100 bg-white/10 px-4 py-2 rounded-full text-sm font-medium">
+                <span>Discover your luck</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 sm:py-12 space-y-8 sm:space-y-12">
+        
+        <!-- Main Hero Card -->
+        <section class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl blur opacity-25"></div>
+            <div class="relative bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+                
+                <div class="bg-gradient-to-br from-indigo-50 to-purple-50 p-8 sm:p-12 text-center relative overflow-hidden">
+                    <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
+                    <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-indigo-200 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
+
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-sm text-indigo-700 font-medium mb-6 border border-slate-100">
+                            <span id="display-date">Loading...</span>
+                        </div>
+                        
+                        <h2 class="text-slate-500 font-medium text-lg mb-2 uppercase tracking-wider">
+                            Today's Lucky Number
+                        </h2>
+                        
+                        <div class="flex justify-center items-center my-6">
+                            <div class="relative">
+                                <div id="lucky-number" class="text-8xl sm:text-9xl font-black gradient-text drop-shadow-sm">
+                                    --
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-600 max-w-md mx-auto text-lg leading-relaxed">
+                            This number is uniquely calculated for today based on the cosmos. Use it for your games or decisions!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Countdown Footer -->
+                <div class="bg-slate-900 text-white p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-6 h-6 text-indigo-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span class="font-medium text-slate-300">Next update in:</span>
+                    </div>
+                    <div class="flex space-x-3 text-center" id="countdown">
+                        <div class="bg-slate-800 rounded-lg px-4 py-2 min-w-[70px]">
+                            <div class="text-2xl font-bold text-indigo-300" id="hours">00</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wide">Hours</div>
+                        </div>
+                        <div class="text-2xl font-bold text-slate-600 py-2">:</div>
+                        <div class="bg-slate-800 rounded-lg px-4 py-2 min-w-[70px]">
+                            <div class="text-2xl font-bold text-indigo-300" id="minutes">00</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wide">Mins</div>
+                        </div>
+                        <div class="text-2xl font-bold text-slate-600 py-2">:</div>
+                        <div class="bg-slate-800 rounded-lg px-4 py-2 min-w-[70px]">
+                            <div class="text-2xl font-bold text-purple-300" id="seconds">00</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wide">Secs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section>
+            <div class="flex items-center space-x-3 mb-6 px-2">
+                <div class="bg-indigo-100 p-2 rounded-lg text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800">Past Results</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="history-container">
+                <!-- History items injected here -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 text-center mt-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <p>Numbers update every night at 11:59 PM exactly.</p>
+            <p class="text-sm mt-2 opacity-50">© <span id="year-footer"></span> Daily Fortune. No database required.</p>
+        </div>
+    </footer>
+
+    <script>
+        // PRNG Logic
+        function mulberry32(a) {
+            return function () {
+                var t = (a += 0x6d2b79f5);
+                t = Math.imul(t ^ (t >>> 15), t | 1);
+                t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+                return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+            };
+        }
+
+        function getLuckyNumberForDate(year, month, date) {
+            const seed = year * 10000 + month * 100 + date;
+            const prng = mulberry32(seed);
+            prng(); prng(); prng(); // Warm up
+            return Math.floor(prng() * 100) + 1;
+        }
+
+        function updateUI() {
+            const now = new Date();
+            // Rollover logic: 11:59 PM moves us to the next day's number
+            const effectiveDate = new Date(now.getTime() + 60000);
+            
+            const y = effectiveDate.getFullYear();
+            const m = effectiveDate.getMonth() + 1;
+            const d = effectiveDate.getDate();
+
+            // Update Today's Info
+            document.getElementById('display-date').textContent = effectiveDate.toLocaleDateString('en-US', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+            document.getElementById('lucky-number').textContent = getLuckyNumberForDate(y, m, d);
+            document.getElementById('year-footer').textContent = now.getFullYear();
+
+            // Countdown Logic
+            let target = new Date(now);
+            target.setHours(23, 59, 0, 0);
+            if (now.getTime() >= target.getTime()) {
+                target.setDate(target.getDate() + 1);
+            }
+
+            const diff = target - now;
+            const hh = Math.floor(diff / (1000 * 60 * 60));
+            const mm = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const ss = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('hours').textContent = hh.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = mm.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = ss.toString().padStart(2, '0');
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('history-container');
+            const now = new Date();
+            const effectiveDate = new Date(now.getTime() + 60000);
+            let html = '';
+
+            for (let i = 1; i <= 10; i++) {
+                const pastDate = new Date(effectiveDate);
+                pastDate.setDate(pastDate.getDate() - i);
+                
+                const num = getLuckyNumberForDate(
+                    pastDate.getFullYear(), 
+                    pastDate.getMonth() + 1, 
+                    pastDate.getDate()
+                );
+                
+                const dateStr = pastDate.toLocaleDateString('en-US', {
+                    weekday: 'short', month: 'short', day: 'numeric'
+                });
+
+                html += `
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 hover:shadow-md transition-shadow hover:border-indigo-200 group">
+                        <div class="text-sm font-medium text-slate-500 mb-3 group-hover:text-indigo-500 transition-colors">
+                            ${dateStr}
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <div class="text-4xl font-bold text-slate-800">${num}</div>
+                            <div class="text-xs font-semibold px-2 py-1 bg-slate-100 text-slate-500 rounded-md">Past</div>
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        // Init
+        setInterval(updateUI, 1000);
+        updateUI();
+        renderHistory();
+    </script>
+</body>
+</html>
